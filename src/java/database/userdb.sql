@@ -30,10 +30,10 @@ INSERT INTO `role` VALUES (2, 'regular user');
 INSERT INTO `role` VALUES (3, 'company admin');
 
 INSERT INTO `user` (`email`,`active`,`first_name`,`last_name`,`password`,`role`)
-	VALUES ('cprg352+admin@gmail.com', true, 'Admin','Admin', 'password', 1);
+	VALUES ('cprg352admin@gmail.com', true, 'Admin','Admin', 'password', 1);
 INSERT INTO `user` (`email`,`active`,`first_name`,`last_name`,`password`,`role`)
-	VALUES ('cprg352+admin2@gmail.com', true, 'Admin2','Admin2', 'password', 3);
+	VALUES ('cprg352admin2@gmail.com', true, 'Admin2','Admin2', 'password', 3);
 INSERT INTO `user` (`email`,`active`,`first_name`,`last_name`,`password`,`role`)
-	VALUES ('cprg352+anne@gmail.com', true, 'Anne','Annerson', 'password', 2);
+	VALUES ('cprg352anne@gmail.com', true, 'Anne','Annerson', 'password', 2);
 INSERT INTO `user` (`email`,`active`,`first_name`,`last_name`,`password`,`role`)
-	VALUES ('cprg352+barb@gmail.com', true, 'Barb','Barber', 'password', 2);
+	VALUES ('cprg352barb@gmail.com', true, 'Barb','Barber', 'password', 2);

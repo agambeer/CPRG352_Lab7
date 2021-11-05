@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,7 @@ public class UserServlet extends HttpServlet {
                 if (request.getParameter("action").equals("delete")) {
                     String email = request.getParameter("email");
                     us.delete(email);
+                    request.setAttribute("message", "User " + email + " deleted!");
                 }
             }
             List<User> users = us.getAll();
@@ -37,7 +40,7 @@ public class UserServlet extends HttpServlet {
             List<Role> roles = rs.getAll();
             request.setAttribute("roles", roles);
         } catch (Exception ex) {
-            
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("action", null);
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
@@ -55,8 +58,6 @@ public class UserServlet extends HttpServlet {
         String stringRole = "";
         int intRole = 0;
         try {
-            User user = new User();
-            user = us.get(email);
             switch(action) {
                 case "add":
                     stringRole = request.getParameter("add_role");
@@ -66,13 +67,15 @@ public class UserServlet extends HttpServlet {
                         case "company admin": intRole = 3; break;
                         default: break;
                     }
-                    us.insert(request.getParameter("add_email"), 
-                                    Boolean.parseBoolean(request.getParameter("add_active")), 
-                                    request.getParameter("add_first_name"), 
-                                    request.getParameter("add_last_name"), 
-                                    request.getParameter("add_password"), 
-                                    intRole
-                                    );
+                    email = request.getParameter("add_email");
+                    us.insert( email, 
+                            Boolean.parseBoolean(request.getParameter("add_active[]")), 
+                            request.getParameter("add_first_name"), 
+                            request.getParameter("add_last_name"), 
+                            request.getParameter("add_password"), 
+                            intRole
+                        );
+                    request.setAttribute("message", "User " + email + " added!");
                     break;
 
                 case "edit":
@@ -83,13 +86,15 @@ public class UserServlet extends HttpServlet {
                         case "company admin": intRole = 3; break;
                         default: break;
                     }
-                    us.update(request.getParameter("edit_email"), 
-                                    Boolean.parseBoolean(request.getParameter("edit_active")), 
-                                    request.getParameter("edit_first_name"), 
-                                    request.getParameter("edit_last_name"), 
-                                    request.getParameter("edit_password"), 
-                                    intRole
-                                    );
+                    email = request.getParameter("edit_email");
+                    us.update(email, 
+                            Boolean.parseBoolean(request.getParameter("edit_active[]")), 
+                            request.getParameter("edit_first_name"), 
+                            request.getParameter("edit_last_name"), 
+                            request.getParameter("edit_password"), 
+                            intRole
+                        );
+                    request.setAttribute("message", "User " + email + " edited!");
                     break;
                 
                 default:
@@ -100,7 +105,7 @@ public class UserServlet extends HttpServlet {
             List<Role> roles = rs.getAll();
             request.setAttribute("roles", roles);
         } catch (Exception ex) {
-
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("action", null);
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
